@@ -1,0 +1,33 @@
+.navbar {
+    width: 100%;
+    background: transparent;
+}
+
+/*#topPanel {*/
+/*    position: absolute;*/
+/*}*/
+
+#searchBar {
+    background: transparent;
+    color: white;
+}
+
+#profileLink{
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#profileLink:hover {
+    color: white;
+}
+
+#brand {
+    padding-right: var(--bs-gutter-x,.75rem);
+    padding-left: var(--bs-gutter-x,.75rem);
+    font-size: 3rem;
+}
+
+li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

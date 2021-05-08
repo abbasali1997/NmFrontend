@@ -1,0 +1,12 @@
+.registerInput, .registerInput:hover, .registerInput:focus, .registerInput:active {
+    background: transparent;
+    padding: 0.8rem;
+    box-shadow: none;
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.4);
+    color: white;
+}
+
+.registerInput:hover, .registerInput:focus, .registerInput:active {
+    border-color: #0da8f0;
+}

@@ -1,0 +1,27 @@
+.loginInputLogo, .loginFormControl, .loginFormControl:active, .loginFormControl:focus, .loginFormControl:hover {
+    background: transparent;
+    border: 0;
+    padding: 1rem;
+    outline: none;
+    box-shadow: none;
+}
+
+.loginFormControl, .loginFormControl:active, .loginFormControl:focus, .loginFormControl:hover {
+    color: white;
+}
+
+.loginInputGroup{
+    border-color: #212529;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    transition: 300ms;
+}
+
+.loginInputGroup:active, .loginInputGroup:focus, .loginInputGroup:hover {
+    border-bottom: 1px solid #0da8f0;
+}
+
+#loginForm hr {
+    height: 2px;
+    background-color: white;
+}
