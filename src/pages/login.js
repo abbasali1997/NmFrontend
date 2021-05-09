@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../styles/login.css';
 import {NavLink} from "react-router-dom";
-
+import auth from '../Auth';
 const API = '/api/auth/';
 
 class Login extends Component {
@@ -27,14 +27,14 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password,
         }).then(res => {
-            console.log(res.data);
             return res.data;
         }).then(data => {
-            console.log(data);
             if (data.success) {
-                localStorage.setItem('token', JSON.stringify(data.token));
-                localStorage.setItem('user', JSON.stringify(data.user));
-                window.location = '/';
+                auth.login(() => {               
+                    localStorage.setItem('token', JSON.stringify(data.token));
+                    localStorage.setItem('user', JSON.stringify(data.user)); 
+                    this.props.history.push('/');
+                })
             } else {
                 this.setState({ error: data.msg })
             }

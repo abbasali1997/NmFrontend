@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/navbar.css';
+import auth from '../Auth';
 
 class Navbar extends Component {
     constructor(props) {
@@ -8,6 +9,17 @@ class Navbar extends Component {
         this.state = {
             username: ''
         }
+    }
+
+    
+    logout = () => {
+        localStorage.clear();
+        auth.logout(() => {
+            window.location.reload(false);
+        });
+        this.setState( {
+            username: ''
+        });
     }
 
     componentDidMount() {
@@ -19,13 +31,6 @@ class Navbar extends Component {
                 })
             }
         }
-    }
-
-    logout = () => {
-        localStorage.clear();
-        this.setState( {
-            username: ''
-        });
     }
 
     render() {

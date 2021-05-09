@@ -7,7 +7,8 @@ import {
 import home from './pages/home';
 import login from './pages/login';
 import register from './pages/register';
-import uploaddata from './pages/upload-data';
+import { ProtectedRoute } from './components/protected.route';
+import reportgeneration from './pages/report-gen';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
               <div>
                   <Navbar />
                   <Route exact path="/" component={home} />
-                  <Route exact path="/upload" component={uploaddata} />
+                  <ProtectedRoute exact path='/upload' component={reportgeneration} />
               </div>
           </Switch>
   );
