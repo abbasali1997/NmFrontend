@@ -26,13 +26,14 @@ class ReportGeneration extends Component {
             description: '',
             doctorName: '',
             doctorSpeciality: '',
-            showComponent: 'form',
+            showComponent: 'upload-data',
             loader: false,
             result: {},
         };
         this.onDrop = this.onDrop.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleRedo = this.handleRedo.bind(this);
     }
 
     handleSubmit(e) {
@@ -47,9 +48,9 @@ class ReportGeneration extends Component {
                 'Content-Type': 'multipart/form-data'
                 }
             }).then(res => {
+                console.log(res);
                 return res.data;
             }).then(data => {
-                console.log(data);
                 this.setState({ 
                     showComponent: 'report', 
                     loader: false, 
@@ -64,6 +65,16 @@ class ReportGeneration extends Component {
         }
     }
 
+    handleRedo() {
+        this.setState({ 
+            showComponent: 'upload-data', 
+            loader: false, 
+            result: {} 
+        }, () => {
+            
+        });
+    }
+
     handleChange(e) {
         this.setState({[e.target.name]: e.target.value });
     }
@@ -73,19 +84,23 @@ class ReportGeneration extends Component {
             picture: picture[0],
         });
         console.log(picture[0]);
-        const image = URL.createObjectURL(picture[0]);
-        this.setState({
-            imageUrl: image,
-        })
+        try{    
+            const image = URL.createObjectURL(picture[0]);
+            this.setState({
+                imageUrl: image,
+            })
+        }catch(err) {
+            console.log(err);
+        }
     }
 
     render() {
-        const page = (this.state.showComponent === 'form') 
+        const page = (this.state.showComponent === 'upload-data') 
                     ? (<UploadData handleSubmit={this.handleSubmit}
                                   handleChange={this.handleChange} 
                                   onDrop={this.onDrop}
                                   {...this.state}/>)
-                    : (<Report {...this.state}/>);  
+                    : (<Report {...this.state} onRedoClick={this.handleRedo}/>);  
         const loader = (this.state.loader) 
                     ? (<div id="loaderContainer" 
                     className="d-flex flex-column justify-content-center align-items-center w-100"

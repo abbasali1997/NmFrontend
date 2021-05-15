@@ -24,6 +24,7 @@
     padding-right: var(--bs-gutter-x,.75rem);
     padding-left: var(--bs-gutter-x,.75rem);
     font-size: 3rem;
+    color: #313233;
 }
 
 li {

@@ -25,22 +25,26 @@ class Report extends Component {
                             );
         return (
             <div className='container d-flex flex-column justify-content-center'>
+                <div className="text-end">
+                    <button type="button" className="btn btn-outline-light reportBtns d-inline-block mb-5" onClick={this.props.onRedoClick}>Redo <i class="ms-2 fas fa-redo"></i></button>
+                    <button type="button" className="btn btn-outline-info reportBtns d-inline-block ms-3 mb-5">Save Report <i className="ms-2 far fa-save"></i></button>    
+                </div>
                 <div className="row">
                     <div className="col-12 col-lg-6 reportCol">
                         <h3 className="reportH3 text-center">Patient's Information</h3>
                         <table className="table table-dark table-striped mt-3">
                             <tbody>
                                 <tr>
-                                    <td colspan="2"><b>First Name:</b><span className="ms-4">{this.props.firstName}</span></td>
-                                    <td colspan="2"><b>Last Name:</b><span className="ms-4">{this.props.lastName}</span></td>       
+                                    <td colSpan="2"><b>First Name:</b><span className="ms-4">{this.props.firstName}</span></td>
+                                    <td colSpan="2"><b>Last Name:</b><span className="ms-4">{this.props.lastName}</span></td>       
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><b>Date Of Birth:</b><span className="ms-4">{this.props.DOB}</span></td>
-                                    <td colspan="2"><b>Age:</b><span className="ms-4">23</span></td>
+                                    <td colSpan="2"><b>Date Of Birth:</b><span className="ms-4">{this.props.DOB}</span></td>
+                                    <td colSpan="2"><b>Age:</b><span className="ms-4">23</span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><b>Sex:</b><span className="ms-4">{this.props.sex}</span></td>
-                                    <td colspan="2"><b>Marital Status:</b><span className="ms-4">{this.props.maritalStatus}</span></td>
+                                    <td colSpan="2"><b>Sex:</b><span className="ms-4">{this.props.sex}</span></td>
+                                    <td colSpan="2"><b>Marital Status:</b><span className="ms-4">{this.props.maritalStatus}</span></td>
                                 </tr>
                                 <tr>
                                     <td><b>Blood Group:</b><span className="ms-4">{this.props.bloodGroup}</span></td>
@@ -48,15 +52,15 @@ class Report extends Component {
                                     <td><b>Weight:</b><span className="ms-4">{this.props.weight} lbs</span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><b>Email:</b><span className="ms-4">{this.props.email}</span></td>
-                                    <td colspan="2"><b>Phone#:</b><span className="ms-4">{this.props.phoneNumber}</span></td>
+                                    <td colSpan="2"><b>Email:</b><span className="ms-4">{this.props.email}</span></td>
+                                    <td colSpan="2"><b>Phone#:</b><span className="ms-4">{this.props.phoneNumber}</span></td>
                                 </tr>
                                 <tr>
                                     <td colSpan="3"><b>Address:</b><span className="ms-4">{this.props.address}</span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><b>City:</b><span className="ms-4">{this.props.city}</span></td>
-                                    <td colspan="2"><b>Country:</b><span className="ms-4">{this.props.country}</span></td>
+                                    <td colSpan="2"><b>City:</b><span className="ms-4">{this.props.city}</span></td>
+                                    <td colSpan="2"><b>Country:</b><span className="ms-4">{this.props.country}</span></td>
                                 </tr>
                                 <tr>
                                     <td colSpan="3"><b>Description:</b><br />
@@ -69,8 +73,8 @@ class Report extends Component {
                         <table className="table table-dark table-striped mt-3">
                             <tbody>
                                 <tr>
-                                    <td colspan="2"><b>Name:</b><span className="ms-4">Dr. {this.props.doctorName}</span></td>
-                                    <td colspan="2"><b>Speciality:</b><span className="ms-4">{this.props.doctorSpeciality}</span></td>       
+                                    <td colSpan="2"><b>Name:</b><span className="ms-4">Dr. {this.props.doctorName}</span></td>
+                                    <td colSpan="2"><b>Speciality:</b><span className="ms-4">{this.props.doctorSpeciality}</span></td>       
                                 </tr>
                             </tbody>
                         </table>
