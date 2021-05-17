@@ -21,8 +21,6 @@ class ReportGeneration extends Component {
             height: '',
             weight: '',
             address: '',
-            city: '',
-            country: '',
             description: '',
             doctorName: '',
             doctorSpeciality: '',
@@ -75,8 +73,8 @@ class ReportGeneration extends Component {
         });
     }
 
-    handleChange(e) {
-        this.setState({[e.target.name]: e.target.value });
+    handleChange(name, value) {
+        this.setState({[name]: value });
     }
 
     onDrop(picture) {

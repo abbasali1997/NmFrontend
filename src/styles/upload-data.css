@@ -73,7 +73,8 @@
 ::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
-/* 
-input:invalid {
-    border-color: red;
-  } */
+
+.error{
+    color: red;
+    font-size: small;
+}

@@ -1,13 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../styles/home.css';
 import {NavLink} from "react-router-dom";
 
-class Home extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
+function Home() {
      return (
          <div id='bg' className='container-fluid p-0 m-0'>
              <div id='homeContentContainer' className="container-fluid w-50 m-0 ps-5 d-flex align-items-center">
@@ -21,7 +16,6 @@ class Home extends Component {
              </div>
          </div>
      )
-    }
 }
 
 export default Home;

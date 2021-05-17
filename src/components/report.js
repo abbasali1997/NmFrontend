@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import '../styles/report.css';
 
 class Report extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const result = (this.props.result.pneumothorax) 
                             ? (

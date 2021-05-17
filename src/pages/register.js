@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import '../styles/register.css';
 
 class Register extends Component {
-    constructor() {
-        super();
-    }
-
     render() {
         return (
             <div className="container d-flex align-items-center" style={{height: '100vh'}}>

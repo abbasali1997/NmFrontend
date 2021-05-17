@@ -36,7 +36,7 @@ class Navbar extends Component {
     render() {
         const profile = (this.state.username)
             ? (<li className="nav-item dropdown">
-                <a className="nav-link p-0" href="#" id="navbarDropdown" role="button"
+                <a className="nav-link p-0" href="#l" id="navbarDropdown" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false">
                     <h5 id='profileLink' className='m-0'><i className="fas fa-user"></i> {this.state.username}</h5>
                 </a>
