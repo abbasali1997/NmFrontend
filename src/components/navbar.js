@@ -44,6 +44,11 @@ class Navbar extends Component {
                     <li onClick={this.logout} style={{cursor: 'pointer'}}>
                         <div className="dropdown-item d-flex justify-content-between"><div>Sign Out</div><div><i className="fas fa-sign-out-alt"></i></div></div>
                     </li>
+                    <NavLink exact to="/report-list">
+                    <li style={{cursor: 'pointer'}}>
+                        <div className="dropdown-item d-flex justify-content-between"><div>Reports</div><div><i className="fas fa-list"></i></div></div>
+                    </li>
+                    </NavLink>
                 </ul>
             </li>)
             : (<NavLink exact to="/login"><h5 id='profileLink' className='m-0'><i className="fas fa-user"></i> Sign In</h5></NavLink>)
