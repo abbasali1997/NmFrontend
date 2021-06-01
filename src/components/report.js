@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import '../styles/report.css';
 import axios from 'axios';
-
+import { storage } from '../firebase/index';
 const API = '/api';
 
 class Report extends Component {
-    saveReport = () => {
+    saveReport = async () => {
+        const storageRef = storage.ref();
+        const imageType = this.props.picture.type.split('/')[1];
         const input = {
+            imageType,
             firstName: this.props.firstName,
             lastName: this.props.lastName,
             DOB: new Date(this.props.DOB),
@@ -23,7 +26,7 @@ class Report extends Component {
             doctorSpeciality: this.props.doctorSpeciality,
             pneumothorax: this.props.result.pneumothorax,
             diagnosis: this.props.result.diagnosis || 'none',
-        }
+        };
 
         if (localStorage.getItem('token') && localStorage.getItem('user')) {
             axios({
@@ -36,6 +39,10 @@ class Report extends Component {
             })
                 .then(res => res.data)
                 .then(data => {
+                    storageRef.child(`images/${data._id}.${imageType}`).put(this.props.picture).then((snapshot) => {
+                        console.log(snapshot);
+                        console.log('Uploaded a blob or file!');
+                      });
                     console.log(data);
                 });
         }

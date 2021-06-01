@@ -43,19 +43,18 @@ class ReportGeneration extends Component {
             formData.append("file", this.state.picture);
             axios.post('/uploader', formData, {
                 headers: {
-                'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data'
                 }
             }).then(res => {
-                console.log(res);
                 return res.data;
             }).then(data => {
-                this.setState({ 
-                    showComponent: 'report', 
-                    loader: false, 
+                this.setState({
+                    showComponent: 'report',
+                    loader: false,
                     result: {
                         pneumothorax: (data.result !== "Normal") ? true : false,
                         diagnosis: data.result
-                    } 
+                    }
                 });
             }).catch(err => {
                 console.log(err);
@@ -64,17 +63,17 @@ class ReportGeneration extends Component {
     }
 
     handleRedo() {
-        this.setState({ 
-            showComponent: 'upload-data', 
-            loader: false, 
-            result: {} 
+        this.setState({
+            showComponent: 'upload-data',
+            loader: false,
+            result: {}
         }, () => {
-            
+
         });
     }
 
     handleChange(name, value) {
-        this.setState({[name]: value });
+        this.setState({ [name]: value });
     }
 
     onDrop(picture) {
@@ -82,30 +81,30 @@ class ReportGeneration extends Component {
             picture: picture[0],
         });
         console.log(picture[0]);
-        try{    
+        try {
             const image = URL.createObjectURL(picture[0]);
             this.setState({
                 imageUrl: image,
             })
-        }catch(err) {
+        } catch (err) {
             console.log(err);
         }
     }
 
     render() {
-        const page = (this.state.showComponent === 'upload-data') 
-                    ? (<UploadData handleSubmit={this.handleSubmit}
-                                  handleChange={this.handleChange} 
-                                  onDrop={this.onDrop}
-                                  {...this.state}/>)
-                    : (<Report {...this.state} onRedoClick={this.handleRedo}/>);  
-        const loader = (this.state.loader) 
-                    ? (<div id="loaderContainer" 
-                    className="d-flex flex-column justify-content-center align-items-center w-100"
-                    style={{position: 'fixed', top: '0', left: '0', height: '100vh', background: 'rgb(33 150 243 / 16%)'}}>                
-                   <Loader type="Circles" color="#00BFFF" height={80} width={80}/>
-                   <h4 className="text-center mt-4" style={{color: "#00BFFF", fontWeight: 'bold'}}>Calculating Results</h4>
-               </div>) : null;                       
+        const page = (this.state.showComponent === 'upload-data')
+            ? (<UploadData handleSubmit={this.handleSubmit}
+                handleChange={this.handleChange}
+                onDrop={this.onDrop}
+                {...this.state} />)
+            : (<Report {...this.state} onRedoClick={this.handleRedo} />);
+        const loader = (this.state.loader)
+            ? (<div id="loaderContainer"
+                className="d-flex flex-column justify-content-center align-items-center w-100"
+                style={{ position: 'fixed', top: '0', left: '0', height: '100vh', background: 'rgb(0 0 0 / 90%)' }}>
+                <Loader type="Circles" color="#00BFFF" height={80} width={80} />
+                <h4 className="text-center mt-4" style={{ color: "#00BFFF", fontWeight: 'bold' }}>Calculating Results</h4>
+            </div>) : null;
         return (
             <div>
                 {loader}

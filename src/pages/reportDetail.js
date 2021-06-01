@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { storage } from '../firebase/index';
+import Loader from "react-loader-spinner";
 
 const API = '/api';
 
@@ -8,11 +10,14 @@ class ReportDetail extends Component {
         super(props);
         this.state = {
             reportId: this.props.location.pathname.split('/').pop(),
-            reportData: {}
+            reportData: {},
+            imageUrl: '',
+            loader: true,
         }
     }
 
     componentDidMount = () => {
+        const storageRef = storage.ref();
         if (localStorage.getItem('token') && localStorage.getItem('user')) {
             axios({
                 method: 'get',
@@ -25,9 +30,18 @@ class ReportDetail extends Component {
                     return res.data;
                 })
                 .then(data => {
-                    this.setState({
-                        reportData: { ...data }
-                    })
+                    storageRef.child(`images/${data._id}.${data.imageType}`).getDownloadURL()
+                        .then((url) => {
+                            this.setState({
+                                reportData: { ...data },
+                                imageUrl: url,
+                                loader: false,
+                            })
+                        })
+                        .catch((error) => {
+                            // Handle any errors
+                            console.log(error);
+                        });
                 });
         }
     }
@@ -37,17 +51,28 @@ class ReportDetail extends Component {
         const style = (reportData.pneumothorax) ? { color: 'red' } : { color: 'limegreen' };
         const pneumothorax = (reportData.pneumothorax) ? 'POSITIVE' : 'NEGATIVE';
         const DOB = new Date(Date.parse(reportData.DOB)).toLocaleDateString();
+
+        const loader = (this.state.loader)
+            ? (<div id="loaderContainer"
+                className="d-flex flex-column justify-content-center align-items-center w-100"
+                style={{ position: 'fixed', top: '0', left: '0', height: '100vh', background: 'rgb(0 0 0 / 90%)' }}>
+                <Loader type="Circles" color="#00BFFF" height={80} width={80} />
+                <h4 className="text-center mt-4" style={{ color: "#00BFFF", fontWeight: 'bold' }}>Loading Data</h4>
+            </div>) : null;
+
         return (
             <div className='container d-flex flex-column justify-content-center'>
+                {loader}
                 <h2 className="text-center" style={{ color: 'white' }}>Patient Report</h2>
                 <div className="row">
                     <div className="col-12 col-lg-6 d-flex flex-column">
-                        <div className="my-3 flex-grow-1 d-flex flex-column justify-content-center"
+                        <div className="my-3 p-2 flex-grow-1 d-flex flex-column justify-content-center"
                             style={{ background: "#212529", color: 'white' }}>
-                                <img src="https://i2.wp.com/farm2.staticflickr.com/1780/44046768961_7a7bf280ae.jpg?resize=500%2C498&ssl=1" 
-                                     style={{ width: '60%', maxHeight: '100%' }} 
-                                     className='d-block m-auto mt-5' 
-                                     alt="patient's x-ray" />     
+                            <h5><b>Patient's CXR:</b></h5>    
+                            <img src={this.state.imageUrl}
+                                style={{ width: '60%', maxHeight: '100%' }}
+                                className='d-block m-auto mt-5'
+                                alt="patient's x-ray" />
                         </div>
                     </div>
                     <div className="col-12 col-lg-6">
