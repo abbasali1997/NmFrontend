@@ -1,11 +1,53 @@
 import React, { Component } from 'react';
+import Loader from "react-loader-spinner";
 import '../styles/report.css';
+import Modal from './modal';
 import axios from 'axios';
 import { storage } from '../firebase/index';
 const API = '/api';
 
 class Report extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalPopUp: false,
+            modal: {
+                message: '',
+                action: null,
+                actionMessage: '',
+                closeModal: null,
+                actionType: '',
+            },
+            loader: false,
+            loaderText: ''
+        }
+    }
+    
+    closeModal = () => {
+        this.setState({
+            modalPopUp: false
+        })
+    }
+
+    onSaveClick = () => {
+        this.setState({
+            modalPopUp: true,
+            modal: {
+                message: 'Are you sure you want to save this report?',
+                action: this.saveReport,
+                actionMessage: 'Save',
+                closeModal: this.closeModal,
+                actionType: 'info',
+            }
+        })
+    }
+
     saveReport = async () => {
+        this.setState({
+            loader: true,
+            modalPopUp: false,
+            loaderText: 'Saving Report'
+        });
         const storageRef = storage.ref();
         const imageType = this.props.picture.type.split('/')[1];
         const input = {
@@ -40,16 +82,26 @@ class Report extends Component {
                 .then(res => res.data)
                 .then(data => {
                     storageRef.child(`images/${data._id}.${imageType}`).put(this.props.picture).then((snapshot) => {
-                        console.log(snapshot);
-                        console.log('Uploaded a blob or file!');
-                      });
-                    console.log(data);
+                        this.setState({
+                            loaderText: 'Saved, Redirecting'
+                        });
+                        setTimeout(() => {                        
+                            this.props.history.push(`/report-list/${data._id}`);
+                        }, 2000);
+                    });
                 });
         }
 
     }
 
     render() {
+        const loader = (this.state.loader)
+            ? (<div id="loaderContainer"
+                className="d-flex flex-column justify-content-center align-items-center w-100"
+                style={{ position: 'fixed', top: '0', left: '0', height: '100vh', background: 'rgb(0 0 0 / 90%)' }}>
+                <Loader type="Puff" color="#00BFFF" height={80} width={80} />
+                <h4 className="text-center mt-4" style={{ color: "#00BFFF", fontWeight: 'bold' }}>{this.state.loaderText}</h4>
+            </div>) : null;
         const result = (this.props.result.pneumothorax)
             ? (
                 <div>
@@ -66,11 +118,21 @@ class Report extends Component {
                     <h1 className="text-center" style={{ color: 'limegreen' }}>Not Detected</h1>
                 </div>
             );
+        const { modal } = this.state;
+        const modalComponent = (this.state.modalPopUp) ? (
+            <Modal action={modal.action}
+                actionMessage={modal.actionMessage}
+                actionType={modal.actionType}
+                closeModal={modal.closeModal}
+                message={modal.message} />
+        ) : null; 
         return (
             <div className='container d-flex flex-column justify-content-center'>
+                { modalComponent }
+                { loader } 
                 <div className="text-end">
                     <button type="button" className="btn btn-outline-light reportBtns d-inline-block mb-5" onClick={this.props.onRedoClick}>Redo <i class="ms-2 fas fa-redo"></i></button>
-                    <button type="button" className="btn btn-outline-info reportBtns d-inline-block ms-3 mb-5" onClick={this.saveReport}>Save Report <i className="ms-2 far fa-save"></i></button>
+                    <button type="button" className="btn btn-outline-info reportBtns d-inline-block ms-3 mb-5" onClick={this.onSaveClick}>Save Report <i className="ms-2 far fa-save"></i></button>
                 </div>
                 <div className="row">
                     <div className="col-12 col-lg-6 reportCol">
@@ -91,7 +153,7 @@ class Report extends Component {
                                 </tr>
                                 <tr>
                                     <td><b>Blood Group:</b><span className="ms-4">{this.props.bloodGroup}</span></td>
-                                    <td><b>Height:</b><span className="ms-4">{this.props.height} cm</span></td>
+                                    <td><b>Height:</b><span className="ms-4">{this.props.height} m</span></td>
                                     <td><b>Weight:</b><span className="ms-4">{this.props.weight} lbs</span></td>
                                 </tr>
                                 <tr>

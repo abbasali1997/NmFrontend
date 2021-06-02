@@ -1,0 +1,9 @@
+#reportImageDiv {
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.425);
+    height: 100%;
+}
+
+#reportImageDiv img {
+    border-radius: 3px;
+}

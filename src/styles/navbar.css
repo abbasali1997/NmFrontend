@@ -3,9 +3,9 @@
     background: transparent;
 }
 
-/*#topPanel {*/
-/*    position: absolute;*/
-/*}*/
+#topPanel {
+   position: static;
+}
 
 #searchBar {
     background: transparent;

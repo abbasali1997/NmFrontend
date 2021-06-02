@@ -30,7 +30,7 @@ class ReportList extends Component {
     }
 
     showFilter = () => {
-        this.setState({ showFilterForm: true });
+        this.setState({ filter: {}, showFilterForm: true });
     }
 
     closeFilters = () => {
@@ -210,7 +210,7 @@ class ReportList extends Component {
             ? (<div id="loaderContainer"
                 className="d-flex flex-column justify-content-center align-items-center w-100"
                 style={{ position: 'fixed', top: '0', left: '0', height: '100vh', background: 'rgb(0 0 0 / 90%)' }}>
-                <Loader type="Circles" color="#00BFFF" height={80} width={80} />
+                <Loader type="Puff" color="#00BFFF" height={80} width={80} />
                 <h4 className="text-center mt-4" style={{ color: "#00BFFF", fontWeight: 'bold' }}>Loading Data</h4>
             </div>) : null;
 
