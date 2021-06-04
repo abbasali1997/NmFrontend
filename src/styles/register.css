@@ -10,3 +10,8 @@
 .registerInput:hover, .registerInput:focus, .registerInput:active {
     border-color: #0da8f0;
 }
+
+.spinner-border {
+    width: 1.3rem;
+    height: 1.3rem;
+}

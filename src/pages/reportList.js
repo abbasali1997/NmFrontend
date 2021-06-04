@@ -58,6 +58,31 @@ class ReportList extends Component {
         }
     }
 
+    changePage = (page) => {
+        if (localStorage.getItem('token') && localStorage.getItem('user')) {
+            axios({
+                method: 'get',
+                url: `${API}/report/`,
+                params: {
+                    ...this.state.filter,
+                    page,
+                    userId: JSON.parse(localStorage.getItem('user'))._id,
+                }
+            })
+                .then(res => {
+                    return res.data;
+                })
+                .then(data => {
+                    this.setState({
+                        ...data,
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    }
+
     applyFilters = () => {
         const filterBtn = document.querySelector('#filterBtn');
         filterBtn.innerHTML = '<div class="spinner-border text-dark" role="status"><span class="visually-hidden">Loading...</span></div>';
@@ -153,7 +178,7 @@ class ReportList extends Component {
                             className="filterInput form-select w-75 m-auto"
                             onChange={this.handleChange}>
                             <option value="">Choose...</option>
-                            <option value="none">None</option>
+                            <option value="Normal">None</option>
                             <option value="COVID">Covid</option>
                         </select>
                     </div>
@@ -169,7 +194,8 @@ class ReportList extends Component {
         ) : null;
 
         const list = this.state.results.map((res, idx) => {
-            const i = idx + 1;
+            const addRows = +`${+this.state.currentPage - 1}0`;
+            const i = idx + 1 + addRows;
             const style = (res.pneumothorax) ? 'red' : 'green';
             const pneumothorax = (res.pneumothorax) ? 'Detected' : 'Not Detected';
             return (
@@ -186,24 +212,28 @@ class ReportList extends Component {
         })
         const count = list.length;
         const prev = (this.state.currentPage > 1) ? (
-            <li className="page-item">
+            <li className="page-item" onClick={this.changePage.bind(this, [this.state.currentPage - 1])}>
                 <span className="page-link" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </span>
             </li>
         ) : null;
         const next = (this.state.currentPage !== this.state.pageCount) ? (
-            <li className="page-item">
+            <li className="page-item" onClick={this.changePage.bind(this, [this.state.currentPage + 1])}>
                 <span className="page-link" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </span>
             </li>
         ) : null;
         const leftNum = (this.state.currentPage > 1) ? (
-            <li className="page-item"><span className="page-link">{this.state.currentPage - 1}</span></li>
+            <li className="page-item" onClick={this.changePage.bind(this, [this.state.currentPage - 1])}>
+                <span className="page-link">{this.state.currentPage - 1}</span>
+            </li>
         ) : null;
         const rightNum = (this.state.currentPage !== this.state.pageCount) ? (
-            <li className="page-item"><span className="page-link">{this.state.currentPage + 1}</span></li>
+            <li className="page-item" onClick={this.changePage.bind(this, [this.state.currentPage + 1])}>
+                <span className="page-link">{this.state.currentPage + 1}</span>
+            </li>
         ) : null;
 
         const loader = (this.state.loader)
@@ -216,7 +246,7 @@ class ReportList extends Component {
 
         return (
             <div className="container">
-                { loader }
+                { loader}
                 { filter}
                 <div className="d-flex justify-content-between">
                     <div>
@@ -238,7 +268,7 @@ class ReportList extends Component {
                         <tr>
                             <th>S.no</th>
                             <th>First Name</th>
-                            <th>last Name</th>
+                            <th>Last Name</th>
                             <th>Doctor's Name</th>
                             <th>Pneumothorax</th>
                             <th>Diagnosis</th>

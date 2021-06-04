@@ -5,7 +5,7 @@ import '../styles/upload-data.css';
 const validEmailRegex = RegExp(
     /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
   );
-const number = RegExp(/^\d+$/g);
+const number = RegExp(/^[0-9]*$/i);
 const nameReg = RegExp(/^[a-z ,.'-]+$/i);
 const float = RegExp(/[+-]?([0-9]*[.])?[0-9]+/i);
 

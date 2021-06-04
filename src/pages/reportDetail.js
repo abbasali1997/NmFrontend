@@ -212,7 +212,6 @@ class ReportDetail extends Component {
                     <button type="button"
                         className="w-25 mb-5 mt-1 ms-auto btn btn-outline-danger"
                         onClick={this.onDeleteClick}>Delete<i className="ms-3 far fa-trash-alt"></i></button>
-
                 </div>
             </div>
         )
